@@ -22,7 +22,42 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
-    
+    <style>
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .countdown-item {
+            background-color: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .countdown-item span {
+            display: block;
+            font-size: 1.5rem;
+            color: #343a40;
+        }
+
+        .countdown-item .label {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target=".navbar" data-offset="51">
@@ -129,6 +164,28 @@
         </div>
     </div>
     <!-- Carousel End -->
+
+    <div class="container">
+        <div id="countdown" class="countdown">
+            <div class="countdown-item">
+                <span id="days"></span>
+                <div class="label">Días</div>
+            </div>
+            <div class="countdown-item">
+                <span id="hours"></span>
+                <div class="label">Horas</div>
+            </div>
+            <div class="countdown-item">
+                <span id="minutes"></span>
+                <div class="label">Minutos</div>
+            </div>
+            <div class="countdown-item">
+                <span id="seconds"></span>
+                <div class="label">Segundos</div>
+            </div>
+        </div>
+        <div id="message" class="message">¡La fiesta ha comenzado!</div>
+    </div>
 
     <!-- About Start -->
     <div class="container-fluid py-5" id="about">
@@ -239,6 +296,24 @@
                         </h5>
                     </div>
                 </div>
+
+                <div class="row section-title">
+                    <div class="col-md-6 border-right border-primary">
+                        <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0">
+                            <h4 class="mb-3">Mis Papás</h4>
+                            <p class="mb-2">Blanca Rocha</p>
+                            <p class="mb-0">Juan Julián</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-center text-md-left ml-md-3">
+                            <h4 class="mb-3">Mis Padrinos</h4>
+                            <p class="mb-2">Magdalena Charqueño</p>
+                            <p class="mb-0">Efraín Sanchez</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="row section-title">
                     <div class="col-md-6 border-right border-primary">
                         <div class="text-center text-md-right mr-md-3 mb-4 mb-md-0">
@@ -306,6 +381,31 @@
                 audioPlayer.pause();
             }
         });
+    </script>
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('2024-10-13T14:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById('countdown').style.display = 'none';
+                document.getElementById('message').style.display = 'block';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        setInterval(updateCountdown, 1000);
     </script>
 </body>
 
